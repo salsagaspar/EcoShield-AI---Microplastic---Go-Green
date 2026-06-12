@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoShield AI - Environmental Intelligence Platform</title>
+    <meta name="description" content="EcoShield AI — Real-time environmental analytics platform for microplastics monitoring, waste cleanup intelligence, and green policy impact assessment.">
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js + Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ===== SIDEBAR NAVIGATION ===== -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-wrapper">
+                    <i class="fa-solid fa-shield-halved logo-icon"></i>
+                </div>
+                <h2>EcoShield <span class="accent-text">AI</span></h2>
+            </div>
+
+            <div class="sidebar-status">
+                <span class="status-dot"></span>
+                <span>Live · All Systems Nominal</span>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-tab="overview" id="nav-overview">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="pillar1" id="nav-pillar1">
+                    <i class="fa-solid fa-microscope"></i>
+                    <span>Microplastic Risk</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="pillar2" id="nav-pillar2">
+                    <i class="fa-solid fa-recycle"></i>
+                    <span>Waste Cleanup</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="pillar3" id="nav-pillar3">
+                    <i class="fa-solid fa-leaf"></i>
+                    <span>Green Initiatives</span>
+                </a>
+                <a href="#" class="nav-item" data-tab="simulator" id="nav-simulator">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>AI Simulator</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h4>Researcher</h4>
+                        <p>Environmental Scientist</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN CONTENT AREA ===== -->
+        <main class="main-content">
+            <!-- Header bar -->
+            <header class="content-header">
+                <div class="header-title">
+                    <h1 id="tab-title">Environmental Intelligence Overview</h1>
+                    <p id="tab-subtitle">Dynamic monitoring &amp; predictive modeling dashboard</p>
+                </div>
+                <div class="header-actions">
+                    <div class="time-widget">
+                        <i class="fa-regular fa-clock"></i>
+                        <span id="current-time">--:-- --</span>
+                    </div>
+                    <button class="btn-refresh" id="btn-refresh-data">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                        <span>Sync Data</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- =========================================================
+                 TAB 1: OVERVIEW
+                 ========================================================= -->
+            <section class="tab-pane active" id="overview-tab">
+
+                <!-- KPI Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card glass" id="kpi-micro-samples">
+                        <div class="metric-card-top">
+                            <div class="metric-icon green-glow"><i class="fa-solid fa-flask"></i></div>
+                            <div class="metric-details">
+                                <span class="metric-label">Microplastic Samples</span>
+                                <h3 class="metric-value" id="stat-micro-samples">-</h3>
+                                <span class="metric-trend positive"><i class="fa-solid fa-circle-check"></i> Cleaned &amp; Verified</span>
+                            </div>
+                        </div>
+                        <div class="metric-progress"><div class="metric-progress-fill" style="width:82%; background: var(--color-green);"></div></div>
+                    </div>
+
+                    <div class="metric-card glass" id="kpi-avg-conc">
+                        <div class="metric-card-top">
+                            <div class="metric-icon blue-glow"><i class="fa-solid fa-droplet"></i></div>
+                            <div class="metric-details">
+                                <span class="metric-label">Avg Concentration</span>
+                                <h3 class="metric-value" id="stat-avg-concentration">-</h3>
+                                <span class="metric-subtext">Particles / Liter</span>
+                            </div>
+                        </div>
+                        <div class="metric-progress"><div class="metric-progress-fill" style="width:58%; background: var(--color-micro);"></div></div>
+                    </div>
+
+                    <div class="metric-card glass" id="kpi-waste-cleaned">
+                        <div class="metric-card-top">
+                            <div class="metric-icon yellow-glow"><i class="fa-solid fa-dumpster-fire"></i></div>
+                            <div class="metric-details">
+                                <span class="metric-label">Waste Cleaned</span>
+                                <h3 class="metric-value" id="stat-waste-cleaned">-</h3>
+                                <span class="metric-subtext">Total Metric Tons</span>
+                            </div>
+                        </div>
+                        <div class="metric-progress"><div class="metric-progress-fill" style="width:71%; background: var(--color-waste);"></div></div>
+                    </div>
+
+                    <div class="metric-card glass" id="kpi-co2-offset">
+                        <div class="metric-card-top">
+                            <div class="metric-icon purple-glow"><i class="fa-solid fa-tree"></i></div>
+                            <div class="metric-details">
+                                <span class="metric-label">CO₂ Offset Total</span>
+                                <h3 class="metric-value" id="stat-co2-offset">-</h3>
+                                <span class="metric-subtext">Equivalent Metric Tons</span>
+                            </div>
+                        </div>
+                        <div class="metric-progress"><div class="metric-progress-fill" style="width:65%; background: var(--color-purple);"></div></div>
+                    </div>
+
+                    <div class="metric-card glass" id="kpi-green-budget">
+                        <div class="metric-card-top">
+                            <div class="metric-icon teal-glow"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                            <div class="metric-details">
+                                <span class="metric-label">Green Budgets</span>
+                                <h3 class="metric-value" id="stat-green-budget">-</h3>
+                                <span class="metric-subtext">USD Allocated</span>
+                            </div>
+                        </div>
+                        <div class="metric-progress"><div class="metric-progress-fill" style="width:90%; background: var(--color-teal);"></div></div>
+                    </div>
+
+                    <div class="metric-card glass" id="kpi-policy">
+                        <div class="metric-card-top">
+                            <div class="metric-icon amber-glow"><i class="fa-solid fa-scale-balanced"></i></div>
+                            <div class="metric-details">
+                                <span class="metric-label">Policy Success</span>
+                                <h3 class="metric-value" id="stat-policy-success">-</h3>
+                                <span class="metric-subtext">Success Rate</span>
+                            </div>
+                        </div>
+                        <div class="metric-progress"><div class="metric-progress-fill" id="policy-progress" style="width:0%; background: var(--color-amber);"></div></div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Welcome + Activity Feed -->
+                <div class="content-row grid-2-1">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3>Welcome to <span class="accent-text">EcoShield AI</span> Platform</h3>
+                            <span class="text-secondary small">Three-pillar environmental intelligence system</span>
+                        </div>
+                        <p class="text-secondary lead">
+                            This dashboard integrates three data science pipelines — automated cleaning, exploratory analysis, and real-time ML inference — to deliver multi-dimensional environmental intelligence across microplastics, waste events, and green policy outcomes.
+                        </p>
+                        <div class="pillars-preview-grid mt-2">
+                            <div class="pillar-box">
+                                <h4 class="color-micro"><i class="fa-solid fa-flask-vial"></i> Microplastics</h4>
+                                <p class="text-secondary small">Chemical &amp; physical composition monitoring across aquatic biomes.</p>
+                            </div>
+                            <div class="pillar-box">
+                                <h4 class="color-waste"><i class="fa-solid fa-truck-ramp-box"></i> Waste Events</h4>
+                                <p class="text-secondary small">Collection capacity, volunteer coordination, and regional efforts.</p>
+                            </div>
+                            <div class="pillar-box">
+                                <h4 class="color-green"><i class="fa-solid fa-building-ngo"></i> Green Projects</h4>
+                                <p class="text-secondary small">Initiative funding efficiency, SDG mapping, and policy outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Feed -->
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-bolt" style="color:var(--color-amber); margin-right:0.4rem;"></i>Live Activity Feed</h3>
+                            <span class="text-secondary small">Recent system events</span>
+                        </div>
+                        <div class="activity-feed" id="activity-feed">
+                            <!-- dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: SDG Radar + SDG Counts Bar -->
+                <div class="content-row grid-1-1">
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3>SDG Alignment Radar</h3>
+                            <span class="text-secondary small">Initiative coverage across Sustainable Development Goals</span>
+                        </div>
+                        <div class="chart-container-radial">
+                            <canvas id="chart-sdg-radar"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3>Primary SDGs Addressed</h3>
+                            <span class="text-secondary small">Total initiatives per SDG goal</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-sdg-bar"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 TAB 2: MICROPLASTIC RISK
+                 ========================================================= -->
+            <section class="tab-pane" id="pillar1-tab">
+
+                <div class="content-row grid-2-1">
+                    <div class="card glass pillar1-card">
+                        <div class="card-header">
+                            <h3>Microplastic Concentration by Biome</h3>
+                            <span class="text-secondary small">Average particles per liter</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-micro-biome"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar1-card">
+                        <div class="card-header">
+                            <h3>Plastic Type Breakdown</h3>
+                            <span class="text-secondary small">Chemical composition index</span>
+                        </div>
+                        <div class="chart-container-radial">
+                            <canvas id="chart-micro-type"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-row grid-1-1">
+                    <div class="card glass pillar1-card">
+                        <div class="card-header">
+                            <h3>Concentration by Location Type</h3>
+                            <span class="text-secondary small">Radar comparison across water body categories</span>
+                        </div>
+                        <div class="chart-container-radial">
+                            <canvas id="chart-micro-location"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar1-card">
+                        <div class="card-header">
+                            <h3>Microplastic Seasonality</h3>
+                            <span class="text-secondary small">Average concentration by season</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-micro-season"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-row grid-1-2">
+                    <div class="card glass pillar1-card">
+                        <div class="card-header">
+                            <h3>Concentration vs Depth</h3>
+                            <span class="text-secondary small">200 random sampling points</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-micro-scatter"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar1-card">
+                        <div class="card-header">
+                            <h3>Physical-Chemical Correlation Heatmap</h3>
+                            <span class="text-secondary small">Pearson correlation values from original dataset</span>
+                        </div>
+                        <div class="correlation-wrapper mt-3">
+                            <div class="heatmap" id="micro-heatmap"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 TAB 3: WASTE CLEANUP
+                 ========================================================= -->
+            <section class="tab-pane" id="pillar2-tab">
+
+                <div class="content-row grid-2-1">
+                    <div class="card glass pillar2-card">
+                        <div class="card-header">
+                            <h3>Waste Collection Tonnage by Source</h3>
+                            <span class="text-secondary small">Accumulated tonnage across campaigns</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-waste-source"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar2-card">
+                        <div class="card-header">
+                            <h3>Yield by Plastic Grade</h3>
+                            <span class="text-secondary small">Mean weight collected per campaign</span>
+                        </div>
+                        <div class="chart-container-radial">
+                            <canvas id="chart-waste-grade"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-row grid-1-1">
+                    <div class="card glass pillar2-card">
+                        <div class="card-header">
+                            <h3>Yield by Weather Condition</h3>
+                            <span class="text-secondary small">Radar — average collection by weather type</span>
+                        </div>
+                        <div class="chart-container-radial">
+                            <canvas id="chart-waste-weather"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar2-card">
+                        <div class="card-header">
+                            <h3>Volunteer Group Yield Efficiency</h3>
+                            <span class="text-secondary small">Tonnage yield vs volunteer group size</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-waste-volunteers"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-row">
+                    <div class="card glass pillar2-card">
+                        <div class="card-header">
+                            <h3>Cleanup Cost vs Weight Yield</h3>
+                            <span class="text-secondary small">Event expenditures vs total weights (200 random points)</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-waste-scatter"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 TAB 4: GREEN INITIATIVES
+                 ========================================================= -->
+            <section class="tab-pane" id="pillar3-tab">
+
+                <div class="content-row grid-1-1">
+                    <div class="card glass pillar3-card">
+                        <div class="card-header">
+                            <h3>Policy Success Rate by Geographic Scope</h3>
+                            <span class="text-secondary small">Success rates and average budgets</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-green-geo"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar3-card">
+                        <div class="card-header">
+                            <h3>Policy Influence Outcomes</h3>
+                            <span class="text-secondary small">Frequency of legislation events</span>
+                        </div>
+                        <div class="chart-container-radial">
+                            <canvas id="chart-green-policy"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-row grid-1-1">
+                    <div class="card glass pillar3-card">
+                        <div class="card-header">
+                            <h3>SDG Coverage by Goal</h3>
+                            <span class="text-secondary small">Number of initiatives targeting each SDG</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-green-sdg"></canvas>
+                        </div>
+                    </div>
+                    <div class="card glass pillar3-card">
+                        <div class="card-header">
+                            <h3>Budget vs Environmental Efficiency</h3>
+                            <span class="text-secondary small">Average budget vs plastic removed and CO₂ saved per initiative type</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="chart-green-initiatives"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- =========================================================
+                 TAB 5: AI SIMULATOR
+                 ========================================================= -->
+            <section class="tab-pane" id="simulator-tab">
+                <div class="content-row grid-1-1">
+
+                    <!-- Controls panel -->
+                    <div class="card glass">
+                        <div class="card-header">
+                            <h3><i class="fa-solid fa-sliders" style="color:var(--accent-primary); margin-right:0.4rem;"></i>Simulator Parameter Controls</h3>
+                            <span class="text-secondary small">Configure features to trigger real-time mathematical inference</span>
+                        </div>
+
+                        <div class="simulator-selector">
+                            <label for="simulator-model-select">Target Predictive Model:</label>
+                            <select id="simulator-model-select" class="form-control">
+                                <option value="micro">Pillar 1: Microplastics Concentration Predictor (Ridge Regression)</option>
+                                <option value="waste">Pillar 2: Waste Cleanup Yield Predictor (Ridge Regression)</option>
+                                <option value="green">Pillar 3: Policy Success Outcome Classifier (Logistic Regression)</option>
+                            </select>
+                        </div>
+
+                        <form id="simulator-form">
+                            <!-- Pillar 1 Form -->
+                            <div class="sim-group" id="sim-group-micro">
+                                <h4 class="mb-3 color-micro"><i class="fa-solid fa-flask"></i> Microplastics Risk Inputs</h4>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label>Location Type</label>
+                                        <select name="location_type" class="form-control"></select>
+                                    </div>
+                                    <div class="form-col">
+                                        <label>Plastic Type</label>
+                                        <select name="plastic_type" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label>Season</label>
+                                        <select name="season" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="range-group mt-2">
+                                    <div class="range-label"><span>Turbidity Level (NTU)</span><span class="range-value" id="val-micro-turbidity">15.0</span></div>
+                                    <input type="range" name="turbidity_ntu" min="0" max="100" step="0.5" value="15.0" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>pH Level</span><span class="range-value" id="val-micro-ph">7.2</span></div>
+                                    <input type="range" name="ph_level" min="4" max="10" step="0.1" value="7.2" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Salinity (PPT)</span><span class="range-value" id="val-micro-salinity">25.0</span></div>
+                                    <input type="range" name="salinity_ppt" min="0" max="40" step="0.5" value="25.0" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Depth (m)</span><span class="range-value" id="val-micro-depth">10.0</span></div>
+                                    <input type="range" name="depth_m" min="0" max="150" step="1.0" value="10.0" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Avg Temperature (°C)</span><span class="range-value" id="val-micro-temp">18.0</span></div>
+                                    <input type="range" name="avg_temperature_c" min="-5" max="45" step="0.5" value="18.0" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Pollution Index (0-100)</span><span class="range-value" id="val-micro-pollution">50.0</span></div>
+                                    <input type="range" name="pollution_index" min="0" max="100" step="1.0" value="50.0" class="slider-control">
+                                </div>
+                            </div>
+
+                            <!-- Pillar 2 Form (Hidden) -->
+                            <div class="sim-group" id="sim-group-waste" style="display:none;">
+                                <h4 class="mb-3 color-waste"><i class="fa-solid fa-truck-ramp-box"></i> Waste Cleanup Inputs</h4>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label>Waste Source</label>
+                                        <select name="waste_source" class="form-control"></select>
+                                    </div>
+                                    <div class="form-col">
+                                        <label>Weather Condition</label>
+                                        <select name="weather_condition" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label>Collector Region</label>
+                                        <select name="region" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="range-group mt-2">
+                                    <div class="range-label"><span>Volume Collected (m³)</span><span class="range-value" id="val-waste-volume">250</span></div>
+                                    <input type="range" name="volume_collected_m3" min="10" max="1000" step="5" value="250" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Registered Volunteers</span><span class="range-value" id="val-waste-volunteers">45</span></div>
+                                    <input type="range" name="num_volunteers" min="1" max="500" step="1" value="45" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Cleanup Duration (Hours)</span><span class="range-value" id="val-waste-duration">4.0</span></div>
+                                    <input type="range" name="duration_hours" min="0.5" max="24" step="0.5" value="4.0" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Operational Cost (USD)</span><span class="range-value" id="val-waste-cost">1,200</span></div>
+                                    <input type="range" name="cost_usd" min="50" max="10000" step="50" value="1200" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Microplastic Fraction (%)</span><span class="range-value" id="val-waste-fraction">12.0</span></div>
+                                    <input type="range" name="microplastic_fraction_pct" min="0" max="100" step="0.5" value="12.0" class="slider-control">
+                                </div>
+                            </div>
+
+                            <!-- Pillar 3 Form (Hidden) -->
+                            <div class="sim-group" id="sim-group-green" style="display:none;">
+                                <h4 class="mb-3 color-green"><i class="fa-solid fa-building-ngo"></i> Policy Success Inputs</h4>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label>Initiative Type</label>
+                                        <select name="initiative_type" class="form-control"></select>
+                                    </div>
+                                    <div class="form-col">
+                                        <label>Organization Type</label>
+                                        <select name="org_type" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-col">
+                                        <label>Geographic Scope</label>
+                                        <select name="geographic_scope" class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="range-group mt-2">
+                                    <div class="range-label"><span>Total Initiative Budget (USD)</span><span class="range-value" id="val-green-budget">150,000</span></div>
+                                    <input type="range" name="total_budget_usd" min="5000" max="1000000" step="5000" value="150000" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Beneficiaries Reached</span><span class="range-value" id="val-green-beneficiaries">25,000</span></div>
+                                    <input type="range" name="beneficiaries_reached" min="100" max="500000" step="100" value="25000" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Media Coverage Events</span><span class="range-value" id="val-green-media">12</span></div>
+                                    <input type="range" name="media_coverage_count" min="0" max="100" step="1" value="12" class="slider-control">
+                                </div>
+                                <div class="range-group">
+                                    <div class="range-label"><span>Target CO₂ Reduction (Tons)</span><span class="range-value" id="val-green-co2">500</span></div>
+                                    <input type="range" name="co2_equivalent_saved_ton" min="0" max="10000" step="50" value="500" class="slider-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Output Display panel -->
+                    <div class="card glass flex-column">
+                        <div class="card-header">
+                            <h3 id="display-title">Predicted Risk Level</h3>
+                            <span class="text-secondary small" id="display-subtitle">Mathematical Ridge combination output</span>
+                        </div>
+
+                        <div class="flex-column align-center justify-center" style="gap: 1.5rem; flex:1;">
+                            <div class="gauge-container">
+                                <div class="gauge-ring">
+                                    <div class="gauge-fill" id="gauge-fill-arc"></div>
+                                    <div class="gauge-mask"></div>
+                                    <div class="gauge-center">
+                                        <span class="gauge-value-number" id="pred-number">-</span>
+                                        <span class="gauge-value-unit" id="pred-unit">particles/L</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="prediction-alert" id="pred-indicator-box">
+                                <h4 id="pred-level-label">MODERATE RISK</h4>
+                                <p class="small text-secondary mt-1" id="pred-level-desc">Predicted values are calculated using weights and coefficients derived from our ML pipeline.</p>
+                            </div>
+
+                            <!-- Feature Importance Mini Bars -->
+                            <div style="width:100%; padding: 0 0.25rem;">
+                                <p class="small text-secondary mb-2">
+                                    <i class="fa-solid fa-ranking-star" style="color:var(--accent-primary); margin-right:0.35rem;"></i>
+                                    Top 5 Feature Contributions
+                                </p>
+                                <div class="stat-bar-list" id="feature-importance-bars">
+                                    <!-- populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Prediction Log -->
+                        <div class="section-divider"></div>
+                        <div>
+                            <p class="small text-secondary mb-2">
+                                <i class="fa-solid fa-clock-rotate-left" style="color:var(--text-muted); margin-right:0.35rem;"></i>
+                                Prediction Log
+                            </p>
+                            <div class="pred-log" id="pred-log"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        </main>
+    </div>
+
+    <!-- Core App JS -->
+    <script src="app.js"></script>
+</body>
+</html>
